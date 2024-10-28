@@ -1,25 +1,33 @@
+
 import React, { useEffect, useState } from 'react';
+import Cell from './Cell';
+import DifficultySelector from './DifficultySelector';
 import './Minesweeper.css';
 
-const boardSize = 10;
-const mineCount = 10;
-
 const Minesweeper = () => {
+  const [boardSize, setBoardSize] = useState(10);
+  const [mineCount, setMineCount] = useState(Math.floor((10 * 10) * 0.2));
   const [board, setBoard] = useState([]);
   const [gameOver, setGameOver] = useState(false);
 
   useEffect(() => {
     createBoard();
-  }, []);
+  }, [boardSize, mineCount]);
+
+  const setDifficulty = (size) => {
+    setBoardSize(size);
+    setMineCount(Math.floor((size * size) * 0.2));
+    setGameOver(false);
+    createBoard();
+  };
 
   const createBoard = () => {
+    setGameOver(false);
     const newBoard = Array.from({ length: boardSize }, () =>
       Array.from({ length: boardSize }, () => ({ isMine: false, revealed: false, value: null }))
     );
-
     placeMines(newBoard);
     setBoard(newBoard);
-    setGameOver(false);
   };
 
   const placeMines = (board) => {
@@ -89,10 +97,15 @@ const Minesweeper = () => {
   };
 
   return (
-    <div>
+    <div id="gameContainer">
       <h1>Minesweeper</h1>
-      <button onClick={createBoard}>Restart Game</button>
-      <div id="gameBoard" className="board">
+      <div
+        id="gameBoard"
+        style={{
+          gridTemplateColumns: `repeat(${boardSize}, 30px)`,
+          gridTemplateRows: `repeat(${boardSize}, 30px)`
+        }}
+      >
         {board.map((row, rowIndex) => (
           <div key={rowIndex} className="row">
             {row.map((cell, colIndex) => (
@@ -109,17 +122,10 @@ const Minesweeper = () => {
           </div>
         ))}
       </div>
-    </div>
-  );
-};
-
-const Cell = ({ row, col, revealed, isMine, value, onClick }) => {
-  return (
-    <div
-      className={`cell ${revealed ? 'revealed' : ''}`}
-      onClick={onClick}
-    >
-      {revealed ? (isMine ? '💣' : (value !== null ? value : '')) : ''}
+      <div id="buttonContainer">
+        <DifficultySelector setDifficulty={setDifficulty} />
+        <button onClick={createBoard}>Restart Game</button>
+      </div>
     </div>
   );
 };
