@@ -75,7 +75,7 @@ h1 {
   color: #e63946;
 }
 
-/* Värit eri numeroille */
+
 .cell.revealed.number-1 { color: #1d3557; }
 .cell.revealed.number-2 { color: #457b9d; }
 .cell.revealed.number-3 { color: #e76f51; }
@@ -89,6 +89,7 @@ h1 {
   display: flex;
   gap: 10px;
   margin-top: 20px;
+  flex-wrap: wrap;
 }
 
 button {
@@ -100,6 +101,7 @@ button {
   font-size: 16px;
   cursor: pointer;
   transition: background-color 0.3s ease;
+  
 }
 
 button:hover {
@@ -108,4 +110,16 @@ button:hover {
 
 button:active {
   background-color: #004085;
+}
+
+#difficultyButtons {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+#difficultyContainer {
+  display: flex;
+  gap: 8px;
+  align-items: center;
 }

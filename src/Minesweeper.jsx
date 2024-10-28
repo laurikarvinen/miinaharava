@@ -15,10 +15,15 @@ const Minesweeper = () => {
   }, [boardSize, mineCount]);
 
   const setDifficulty = (size) => {
+    if (size < 1 || size > 30) {
+      alert('Please enter a value between 1 and 30.');
+      return;
+    }
     setBoardSize(size);
     setMineCount(Math.floor((size * size) * 0.2));
     setGameOver(false);
     createBoard();
+    
   };
 
   const createBoard = () => {
