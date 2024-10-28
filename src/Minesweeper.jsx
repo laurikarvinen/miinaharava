@@ -37,6 +37,10 @@ const Minesweeper = () => {
 
   const placeMines = (board) => {
     let minesPlaced = 0;
+    if (process.env.NODE_ENV === 'test') {
+      board[0][0].isMine = true;
+      minesPlaced++;
+  }
     while (minesPlaced < mineCount) {
       const row = Math.floor(Math.random() * boardSize);
       const col = Math.floor(Math.random() * boardSize);
@@ -106,6 +110,7 @@ const Minesweeper = () => {
       <h1>Minesweeper</h1>
       <div
         id="gameBoard"
+        data-testid="game-board"
         style={{
           gridTemplateColumns: `repeat(${boardSize}, 30px)`,
           gridTemplateRows: `repeat(${boardSize}, 30px)`
