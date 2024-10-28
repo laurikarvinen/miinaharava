@@ -28,6 +28,7 @@ const Cell = ({ row, col, revealed, isMine, value, onClick }) => {
       className={cellClass}
       onClick={onClick}
       onContextMenu={handleRightClick}
+      data-testid={`cell-${row}-${col}`}
     >
       {revealed ? (isMine ? '💣' : (value !== null ? value : '')) : (flagged ? <Flag /> : '')}
     </div>
