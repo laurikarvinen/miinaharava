@@ -1,6 +1,7 @@
 const sqlite3 = require("sqlite3").verbose();
 const db = new sqlite3.Database("./database.db");
 
+//Add easy difficulty score
 exports.addEasyScore = (req, res) => {
   const { player_name, score } = req.body;
 
@@ -24,6 +25,7 @@ exports.addEasyScore = (req, res) => {
   });
 };
 
+//Get easy difficulty score
 exports.getEasyScores = (req, res) => {
   const limit = 10;
 
@@ -41,6 +43,7 @@ exports.getEasyScores = (req, res) => {
   );
 };
 
+//Add medium difficulty score
 exports.addMediumScore = (req, res) => {
   const { player_name, score } = req.body;
 
@@ -65,6 +68,7 @@ exports.addMediumScore = (req, res) => {
   });
 };
 
+//Get medium difficulty score
 exports.getMediumScores = (req, res) => {
   const limit = 10;
 
@@ -84,6 +88,7 @@ exports.getMediumScores = (req, res) => {
   );
 };
 
+//Add hard difficulty score
 exports.addHardScore = (req, res) => {
   const { player_name, score } = req.body;
 
@@ -107,6 +112,7 @@ exports.addHardScore = (req, res) => {
   });
 };
 
+//Get hard difficulty score
 exports.getHardScores = (req, res) => {
   const limit = 10;
 
