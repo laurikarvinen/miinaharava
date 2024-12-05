@@ -17,6 +17,7 @@ React
 Backend:
 npm install cors
 npm install 
+node db.js
 
 Frontend:
 npm install
