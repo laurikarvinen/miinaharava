@@ -1,10 +1,7 @@
-Minesweeper - React Game
-Project Information
-Project Name
-Minesweeper - React
+Minesweeper - React 
 
 Project Description
-Minesweeper on klassinen peli, jossa pelaajan tulee avata ruutuja pelilaudalla ilman, että hän osuu miinaan. Ruudun numero kertoo, kuinka monta miinaa on sen ympärillä olevissa ruuduissa. Peli tarjoaa mahdollisuuden asettaa pelilaudan koon ja vaikeustason, ja se tallentaa parhaat pisteet pelaajille.
+Minesweeper is a game where you clear a grid of squares without hitting any mines. The number on each square represents the number of mines in the adjacent squares. Use logic to clear squares without triggering a mine!
 
 Team Members
 Lauri Karvinen
