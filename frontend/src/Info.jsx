@@ -10,7 +10,7 @@ const Info = () => {
       </p>
       <h2>Scoring</h2>
       <p>
-        You earn 1 point for every safe square you reveal. The goal is to maximize your score by revealing as many safe squares as possible without hitting a mine. Hitting a mine ends the game, so be careful!
+        You earn 10 point for every safe square you reveal. The goal is to maximize your score by revealing as many safe squares as possible without hitting a mine. Hitting a mine ends the game, so be careful!
       </p>
       <h2>Mine Distribution</h2>
       <p>
