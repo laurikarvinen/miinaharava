@@ -1,17 +1,18 @@
-Minesweeper - React 
+****Minesweeper - React ****
 
-Project Description
+**Project Description**
 Minesweeper is a game where you clear a grid of squares without hitting any mines. The number on each square represents the number of mines in the adjacent squares. Use logic to clear squares without triggering a mine!
 
-Team Members
+**Team Members**
 Lauri Karvinen
 Joonas Kultanen
-Development Instructions
-Tools and Software Needed
+
+
+**Tools and Software Needed**
 Node.js 
 React
 
-Build commands:
+**Build commands:**
 Backend:
 npm install cors
 npm install 
@@ -19,7 +20,7 @@ npm install
 Frontend:
 npm install
 
-Run commands:
+**Run commands:**
 Backend:
 npm start
 Frontend:
