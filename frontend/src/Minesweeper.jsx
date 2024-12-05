@@ -1,46 +1,59 @@
-
 import React, { useEffect, useState } from 'react';
 import Cell from './Cell';
 import DifficultySelector from './DifficultySelector';
 import './Minesweeper.css';
 
-const Minesweeper = () => {
+const Minesweeper = ({ playerName, onSetPlayerName }) => {
   const [boardSize, setBoardSize] = useState(10);
   const [mineCount, setMineCount] = useState(Math.floor((10 * 10) * 0.2));
   const [board, setBoard] = useState([]);
   const [gameOver, setGameOver] = useState(false);
+  const [score, setScore] = useState(0);
+  const [difficulty, setDifficulty] = useState('medium');
+
+  useEffect(() => {
+    if (!playerName) {
+      const name = prompt("Enter your name to start the game:");
+      if (name) {
+        onSetPlayerName(name);
+      } else {
+        alert("Name is required to play!");
+      }
+    }
+    createBoard();
+  }, [playerName]);
 
   useEffect(() => {
     createBoard();
-  }, [boardSize, mineCount]);
+  }, [boardSize]);
 
-  const setDifficulty = (size) => {
+  const setGameDifficulty = (size, difficultyLevel) => {
     if (size < 1 || size > 30) {
       alert('Please enter a value between 1 and 30.');
       return;
     }
+
     setBoardSize(size);
     setMineCount(Math.floor((size * size) * 0.2));
+    setDifficulty(difficultyLevel);
+    setScore(0);
     setGameOver(false);
     createBoard();
-    
   };
 
   const createBoard = () => {
     setGameOver(false);
+    setScore(0);
     const newBoard = Array.from({ length: boardSize }, () =>
       Array.from({ length: boardSize }, () => ({ isMine: false, revealed: false, value: null }))
     );
     placeMines(newBoard);
     setBoard(newBoard);
+    console.log(newBoard);
   };
 
   const placeMines = (board) => {
     let minesPlaced = 0;
-    if (process.env.NODE_ENV === 'test') {
-      board[0][0].isMine = true;
-      minesPlaced++;
-  }
     while (minesPlaced < mineCount) {
       const row = Math.floor(Math.random() * boardSize);
       const col = Math.floor(Math.random() * boardSize);
@@ -49,6 +62,7 @@ const Minesweeper = () => {
         minesPlaced++;
       }
     }
+    console.log(board);
   };
 
   const handleCellClick = (row, col) => {
@@ -65,7 +79,8 @@ const Minesweeper = () => {
 
     if (cell.isMine) {
       setGameOver(true);
-      alert('Game Over!');
+      alert("Game Over!");
+      submitScore();
     } else {
       const minesAround = countMinesAround(row, col);
       if (minesAround > 0) {
@@ -74,7 +89,9 @@ const Minesweeper = () => {
         revealSurroundingCells(row, col, newBoard);
       }
     }
+
     setBoard(newBoard);
+    setScore((prev) => prev + 10);
   };
 
   const countMinesAround = (row, col) => {
@@ -105,15 +122,44 @@ const Minesweeper = () => {
     }
   };
 
+  const submitScore = () => {
+    if (gameOver) return;
+
+    let difficultyLevel = '';
+    if (boardSize === 5) {
+      difficultyLevel = 'easy';
+    } else if (boardSize === 10) {
+      difficultyLevel = 'medium';
+    } else if (boardSize === 15) {
+      difficultyLevel = 'hard';
+    }
+
+    fetch(`http://localhost:5000/api/${difficultyLevel}-scores`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ player_name: playerName, score }),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log("Score submitted:", data);
+        alert("Your score has been submitted!");
+      })
+      .catch((error) => {
+        console.error("Error submitting score:", error);
+        alert("Failed to submit score. Please try again.");
+      });
+  };
+
   return (
     <div id="gameContainer">
       <h1>Minesweeper</h1>
+      <p>Player: {playerName}</p>
+      <p>Score: {score}</p>
       <div
         id="gameBoard"
-        data-testid="game-board"
         style={{
           gridTemplateColumns: `repeat(${boardSize}, 30px)`,
-          gridTemplateRows: `repeat(${boardSize}, 30px)`
+          gridTemplateRows: `repeat(${boardSize}, 30px)`,
         }}
       >
         {board.map((row, rowIndex) => (
@@ -133,7 +179,7 @@ const Minesweeper = () => {
         ))}
       </div>
       <div id="buttonContainer">
-        <DifficultySelector setDifficulty={setDifficulty} />
+        <DifficultySelector setDifficulty={setGameDifficulty} />
         <button onClick={createBoard}>Restart Game</button>
       </div>
     </div>

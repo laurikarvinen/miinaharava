@@ -6,9 +6,9 @@ const DifficultySelector = ({ setDifficulty }) => {
   return (
     <div>
       <div id="difficultyButtons">
-        <button onClick={() => setDifficulty(5)}>5x5</button>
-        <button onClick={() => setDifficulty(10)}>10x10</button>
-        <button onClick={() => setDifficulty(15)}>15x15</button>
+        <button onClick={() => setDifficulty(5, 'easy')}>5x5</button>
+        <button onClick={() => setDifficulty(10, 'medium')}>10x10</button>
+        <button onClick={() => setDifficulty(15, 'hard')}>15x15</button>
       </div>
       <div id="difficultyContainer">
         <input
@@ -19,7 +19,7 @@ const DifficultySelector = ({ setDifficulty }) => {
           min="1"
           max="25"
         />
-        <button onClick={() => setDifficulty(customSize)}>Set Custom Difficulty</button>
+        <button onClick={() => setDifficulty(customSize, 'custom')}>Set Custom Difficulty</button>
       </div>
     </div>
   );
