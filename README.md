@@ -1,4 +1,4 @@
-**Minesweeper - React **
+**Minesweeper - React**
 
 **Project Description**
 
